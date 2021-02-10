@@ -1,4 +1,8 @@
-﻿using System;
+﻿using Baby_Spice_ConsoleProject.Employees;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
 
 namespace Baby_Spice_ConsoleProject
 {
@@ -9,7 +13,7 @@ namespace Baby_Spice_ConsoleProject
             bool showMenu = true;
             while (showMenu)
             {
-                showMenu = MainMenu();
+                MainMenu();
             }
 
             bool MainMenu()
@@ -27,6 +31,7 @@ namespace Baby_Spice_ConsoleProject
                 {
                     case "1":
                         showMenu = false;
+                        Console.Clear();
                         EnterSales();
                         return true;
                     case "2":
@@ -47,9 +52,28 @@ namespace Baby_Spice_ConsoleProject
             void EnterSales()
             {
                 Console.WriteLine("Which Sales Employee Are You?");
-                var x = Console.ReadLine();
-                Console.WriteLine($"{x}");
-                showMenu = true;
+                var closers = new List<SalesEmployee>
+                {
+                    new SalesEmployee( "Dwight", "Hale", 1),
+                    new SalesEmployee( "Tim", "Halbert", 2),
+                    new SalesEmployee( "Phyllis", "Leaf", 3),
+                };
+
+                foreach (var closer in closers)
+                {
+                    Console.WriteLine($"{closer.IdNumber}. {closer.FirstName} {closer.LastName}");
+                }
+                
+                var selection = Console.ReadLine();
+                var selectedSeller = closers.Find(closer => closer.IdNumber == int.Parse(selection));
+                Console.Clear();
+                Console.WriteLine($"Hi, {selectedSeller.FirstName}!");
+                Thread.Sleep(2000);
+                Console.Clear();
+                Console.WriteLine("Please Enter The Client's Name:");
+                var clientName = Console.ReadLine();
+                Console.WriteLine("Please Enter the Client ID");
+
             }
         }
     }
