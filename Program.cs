@@ -28,7 +28,7 @@ namespace Baby_Spice_ConsoleProject
 
             while (showMenu)
             {
-                MainMenu();
+                showMenu = MainMenu();
             }
 
             bool MainMenu()
@@ -68,27 +68,38 @@ namespace Baby_Spice_ConsoleProject
             void EnterSales()
             {
                 Console.WriteLine("Which Sales Employee Are You?");
-                var closers = new List<SalesEmployee>
-                {
-                    new SalesEmployee( "Dwight", "Hale", 1),
-                    new SalesEmployee( "Tim", "Halbert", 2),
-                    new SalesEmployee( "Phyllis", "Leaf", 3),
-                };
-
-                foreach (var closer in closers)
+                foreach (var closer in salesPeople)
                 {
                     Console.WriteLine($"{closer.IdNumber}. {closer.FirstName} {closer.LastName}");
                 }
                 
                 var selection = Console.ReadLine();
-                var selectedSeller = closers.Find(closer => closer.IdNumber == int.Parse(selection));
+                var selectedSeller = salesPeople.Find(closer => closer.IdNumber == int.Parse(selection));
                 Console.Clear();
                 Console.WriteLine($"Hi, {selectedSeller.FirstName}!");
                 Thread.Sleep(2000);
                 Console.Clear();
                 Console.WriteLine("Please Enter The Client's Name:");
                 var clientName = Console.ReadLine();
-                Console.WriteLine("Please Enter the Client ID");
+
+                //TODO: make a random client ID with no repeats 
+                Console.WriteLine("Enter A Client ID");
+                var randomCliId = int.Parse(Console.ReadLine());
+
+                //moving on
+                Console.WriteLine("Enter The Dollar Amount For The Sale:");
+                var saleAmount = int.Parse(Console.ReadLine());
+
+                Console.WriteLine("Enter The Frequency Of Payment (I.E. Weekly, Monthly, etc."); //CAPSLOCK
+                var payDay = Console.ReadLine();
+
+                Console.WriteLine("Enter Contract Term Length: ");
+                var term = Console.ReadLine();
+
+                var sale = new Sale(selectedSeller, clientName, randomCliId, saleAmount, payDay, term);
+                selectedSeller.Sales.Add(sale);
+                Caboose();
+                
             }
 
             void GenerateReport()
@@ -114,6 +125,11 @@ namespace Baby_Spice_ConsoleProject
                     // Add in foreach to print each of salespersons clients
                     Console.WriteLine($"Total:");
                 }
+                Caboose();
+            }
+
+            void Caboose()
+            {
                 Console.WriteLine("\nPress 1 To Return to Main Menu Or Any Other Key To Exit");
                 var command = Console.ReadLine();
                 if (command == "1")
