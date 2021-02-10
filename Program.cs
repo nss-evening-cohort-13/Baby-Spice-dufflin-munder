@@ -1,7 +1,8 @@
-﻿using System;
+﻿using Baby_Spice_ConsoleProject.Employees;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using Baby_Spice_ConsoleProject.Employees;
+using System.Threading;
 
 namespace Baby_Spice_ConsoleProject
 {
@@ -18,6 +19,15 @@ namespace Baby_Spice_ConsoleProject
                                 
            
             bool showMenu = true;
+
+            var accountants = new List<AccountantEmployee>
+            {
+                new AccountantEmployee("Oscar", "Martinez", 1),
+                new AccountantEmployee("Angela", "Martin", 2),
+                new AccountantEmployee("Kevin", "Malone", 3)
+            };
+
+            
             while (showMenu)
             {
                 showMenu = MainMenu();
@@ -38,11 +48,13 @@ namespace Baby_Spice_ConsoleProject
                 {
                     case "1":
                         showMenu = false;
+                        Console.Clear();
                         EnterSales();
                         return true;
                     case "2":
-                        Console.WriteLine("Generate A Report");
-                        return true; ;
+                        showMenu = false;
+                        GenerateReport();
+                        return true;
                     case "3":
                         CreateNewSalesperson();                          
                         return true;
@@ -58,9 +70,74 @@ namespace Baby_Spice_ConsoleProject
             void EnterSales()
             {
                 Console.WriteLine("Which Sales Employee Are You?");
-                var x = Console.ReadLine();
-                Console.WriteLine($"{x}");
-                showMenu = true;
+                foreach (var closer in salesPeople)
+                {
+                    Console.WriteLine($"{closer.IdNumber}. {closer.FirstName} {closer.LastName}");
+                }
+                
+                var selection = Console.ReadLine();
+                var selectedSeller = salesPeople.Find(closer => closer.IdNumber == int.Parse(selection));
+                Console.Clear();
+                Console.WriteLine($"Hi, {selectedSeller.FirstName}!");
+                Thread.Sleep(2000);
+                Console.Clear();
+                Console.WriteLine("Please Enter The Client's Name:");
+                var clientName = Console.ReadLine();
+
+                //TODO: make a random client ID with no repeats 
+                Console.WriteLine("Enter A Client ID");
+                var randomCliId = int.Parse(Console.ReadLine());
+
+                //moving on
+                Console.WriteLine("Enter The Dollar Amount For The Sale:");
+                var saleAmount = int.Parse(Console.ReadLine());
+
+                Console.WriteLine("Enter The Frequency Of Payment (I.E. Weekly, Monthly, etc."); //CAPSLOCK
+                var payDay = Console.ReadLine();
+
+                Console.WriteLine("Enter Contract Term Length: ");
+                var term = Console.ReadLine();
+
+                var sale = new Sale(selectedSeller, clientName, randomCliId, saleAmount, payDay, term);
+                selectedSeller.Sales.Add(sale);
+                Caboose();
+                
+            }
+
+            void GenerateReport()
+            {
+                Console.WriteLine("\nGenerate A Report");
+                Console.WriteLine("---------------------------");
+                Console.WriteLine("Choose Which Accountant To Generate A Report For:");
+                foreach (var accountant in accountants)
+                {
+                    Console.WriteLine($"{accountant.IdNumber}. {accountant.FirstName}");
+                }
+                var selectionNumber = Console.ReadLine();
+                var selectedAccountant = accountants.Find(accountant => accountant.IdNumber == int.Parse(selectionNumber));
+                Console.WriteLine("\nMonthly Sales Report");
+                Console.WriteLine($"For: {selectedAccountant.FirstName}");
+                Console.WriteLine("---------------------------");
+                int count = 0;
+                foreach(var salesPerson in salesPeople)
+                {
+                    count++;
+                    Console.WriteLine($"\n{count}. {salesPerson.FirstName} {salesPerson.LastName}");
+                    Console.WriteLine("Clients:".PadLeft(10));
+                    // Add in foreach to print each of salespersons clients
+                    Console.WriteLine($"Total:");
+                }
+                Caboose();
+            }
+
+            void Caboose()
+            {
+                Console.WriteLine("\nPress 1 To Return to Main Menu Or Any Other Key To Exit");
+                var command = Console.ReadLine();
+                if (command == "1")
+                {
+                    showMenu = true;
+                }
             }
 
            void CreateNewSalesperson()
@@ -73,9 +150,12 @@ namespace Baby_Spice_ConsoleProject
                 string salesLastName;
                 salesLastName = Console.ReadLine();
 
-                var newSalesEmployee = (salesFirstName + salesLastName);
+                var newSalesEmployee = new SalesEmployee(salesFirstName, salesLastName, salesPeople.Last().IdNumber + 1);
+                
+                salesPeople.Add(newSalesEmployee);
 
                 Console.WriteLine($"Hi, {salesFirstName}");
+                Caboose();
 
             }
 
