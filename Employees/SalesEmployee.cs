@@ -9,10 +9,11 @@ namespace Baby_Spice_ConsoleProject.Employees
     {
         public List<Sale> Sales { get; set; }
 
-        public SalesEmployee(string firstName, string lastName)
+        public SalesEmployee(string firstName, string lastName, int idNumber)
         {
             FirstName = firstName;
             LastName = lastName;
+            IdNumber = idNumber;
         }
     }
 }

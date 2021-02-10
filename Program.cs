@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Baby_Spice_ConsoleProject.Employees;
 
 namespace Baby_Spice_ConsoleProject
 {
@@ -6,6 +9,14 @@ namespace Baby_Spice_ConsoleProject
     {
         static void Main(string[] args)
         {
+            var salesPeople = new List<SalesEmployee>
+            {
+                  new SalesEmployee("Dwight", "Hyte", 1),
+                  new SalesEmployee("Tim", "Halbert", 2),
+                  new SalesEmployee("Phyllis", "Leaf", 3)
+            };
+                                
+           
             bool showMenu = true;
             while (showMenu)
             {
@@ -33,7 +44,7 @@ namespace Baby_Spice_ConsoleProject
                         Console.WriteLine("Generate A Report");
                         return true; ;
                     case "3":
-                        Console.WriteLine("Update me");
+                        CreateNewSalesperson();                          
                         return true;
                     case "4":
                         Console.WriteLine("Enter Sale Info");
@@ -51,6 +62,23 @@ namespace Baby_Spice_ConsoleProject
                 Console.WriteLine($"{x}");
                 showMenu = true;
             }
-        }
+
+           void CreateNewSalesperson()
+            {
+                Console.WriteLine("Enter new salesperson's first name:");
+                string salesFirstName;
+                salesFirstName = Console.ReadLine();
+
+                Console.WriteLine("Enter new salesperson's last name:");
+                string salesLastName;
+                salesLastName = Console.ReadLine();
+
+                var newSalesEmployee = (salesFirstName + salesLastName);
+
+                Console.WriteLine($"Hi, {salesFirstName}");
+
+            }
+
+         }
     }
 }
