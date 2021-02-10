@@ -10,6 +10,14 @@ namespace Baby_Spice_ConsoleProject
     {
         static void Main(string[] args)
         {
+            var salesPeople = new List<SalesEmployee>
+            {
+                  new SalesEmployee("Dwight", "Hyte", 1),
+                  new SalesEmployee("Tim", "Halbert", 2),
+                  new SalesEmployee("Phyllis", "Leaf", 3)
+            };
+                                
+           
             bool showMenu = true;
 
             var accountants = new List<AccountantEmployee>
@@ -18,7 +26,6 @@ namespace Baby_Spice_ConsoleProject
                 new AccountantEmployee("Angela", "Martin", 2),
                 new AccountantEmployee("Kevin", "Malone", 3)
             };
-
             var salesPeople = new List<SalesEmployee>
             {
                 new SalesEmployee("Jim", "Halpert", 1),
@@ -54,7 +61,7 @@ namespace Baby_Spice_ConsoleProject
                         GenerateReport();
                         return true;
                     case "3":
-                        Console.WriteLine("Update me");
+                        CreateNewSalesperson();                          
                         return true;
                     case "4":
                         Console.WriteLine("Enter Sale Info");
@@ -135,8 +142,64 @@ namespace Baby_Spice_ConsoleProject
                 if (command == "1")
                 {
                     showMenu = true;
+                
+            }
+
+            void GenerateReport()
+            {
+                Console.WriteLine("\nGenerate A Report");
+                Console.WriteLine("---------------------------");
+                Console.WriteLine("Choose Which Accountant To Generate A Report For:");
+                foreach (var accountant in accountants)
+                {
+                    Console.WriteLine($"{accountant.IdNumber}. {accountant.FirstName}");
+                }
+                var selectionNumber = Console.ReadLine();
+                var selectedAccountant = accountants.Find(accountant => accountant.IdNumber == int.Parse(selectionNumber));
+                Console.WriteLine("\nMonthly Sales Report");
+                Console.WriteLine($"For: {selectedAccountant.FirstName}");
+                Console.WriteLine("---------------------------");
+                int count = 0;
+                foreach(var salesPerson in salesPeople)
+                {
+                    count++;
+                    Console.WriteLine($"\n{count}. {salesPerson.FirstName} {salesPerson.LastName}");
+                    Console.WriteLine("Clients:".PadLeft(10));
+                    // Add in foreach to print each of salespersons clients
+                    Console.WriteLine($"Total:");
+                }
+                Caboose();
+            }
+
+            void Caboose()
+            {
+                Console.WriteLine("\nPress 1 To Return to Main Menu Or Any Other Key To Exit");
+                var command = Console.ReadLine();
+                if (command == "1")
+                {
+                    showMenu = true;
                 }
             }
-        }
+
+           void CreateNewSalesperson()
+            {
+                Console.WriteLine("Enter new salesperson's first name:");
+                string salesFirstName;
+                salesFirstName = Console.ReadLine();
+
+                Console.WriteLine("Enter new salesperson's last name:");
+                string salesLastName;
+                salesLastName = Console.ReadLine();
+
+                var newSalesEmployee = new SalesEmployee(salesFirstName, salesLastName, salesPeople.Last().IdNumber + 1);
+                
+                salesPeople.Add(newSalesEmployee);
+
+                Console.WriteLine($"Hi, {salesFirstName}");
+                Caboose();
+
+            }
+
+         }
     }
 }
