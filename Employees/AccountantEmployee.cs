@@ -6,11 +6,12 @@ namespace Baby_Spice_ConsoleProject.Employees
 {
     class AccountantEmployee : DunderEmployees
     {
-        
-        public AccountantEmployee(string firstName, string lastName)
+        public int IdNumber { get; set; }
+        public AccountantEmployee(string firstName, string lastName, int idNumber)
         {
             FirstName = firstName;
             LastName = lastName;
+            IdNumber = idNumber;
         }
     }
 }
