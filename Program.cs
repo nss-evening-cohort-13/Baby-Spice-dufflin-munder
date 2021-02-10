@@ -26,12 +26,6 @@ namespace Baby_Spice_ConsoleProject
                 new AccountantEmployee("Angela", "Martin", 2),
                 new AccountantEmployee("Kevin", "Malone", 3)
             };
-            var salesPeople = new List<SalesEmployee>
-            {
-                new SalesEmployee("Jim", "Halpert", 1),
-                new SalesEmployee("Dwight", "Shrute", 2),
-                new SalesEmployee("Michael", "Scott", 3)
-            };
 
             while (showMenu)
             {
@@ -123,62 +117,23 @@ namespace Baby_Spice_ConsoleProject
                 Console.WriteLine("\nMonthly Sales Report");
                 Console.WriteLine($"For: {selectedAccountant.FirstName}");
                 Console.WriteLine("---------------------------");
-                int count = 0;
-                foreach(var salesPerson in salesPeople)
+                int salesPersonCount = 0;
+                foreach (var salesPerson in salesPeople)
                 {
-                    count++;
-                    Console.WriteLine($"\n{count}. {salesPerson.FirstName} {salesPerson.LastName}");
+                    salesPersonCount++;
+                    Console.WriteLine($"\n{salesPersonCount}. {salesPerson.FirstName} {salesPerson.LastName}");
                     Console.WriteLine("Clients:".PadLeft(10));
-                    // Add in foreach to print each of salespersons clients
-                    Console.WriteLine($"Total:");
+                    int saleCount = 0;
+                    int salesTotal = 0;
+                    foreach (var sale in salesPerson.Sales)
+                    {
+                        saleCount++;
+                        Console.WriteLine($"\t{saleCount}. {sale.Client}");
+                        salesTotal += sale.Amount;
+                    }
+                    Console.WriteLine($"Total: ${salesTotal}");
                 }
                 Caboose();
-            }
-
-            void Caboose()
-            {
-                Console.WriteLine("\nPress 1 To Return to Main Menu Or Any Other Key To Exit");
-                var command = Console.ReadLine();
-                if (command == "1")
-                {
-                    showMenu = true;
-                
-            }
-
-            void GenerateReport()
-            {
-                Console.WriteLine("\nGenerate A Report");
-                Console.WriteLine("---------------------------");
-                Console.WriteLine("Choose Which Accountant To Generate A Report For:");
-                foreach (var accountant in accountants)
-                {
-                    Console.WriteLine($"{accountant.IdNumber}. {accountant.FirstName}");
-                }
-                var selectionNumber = Console.ReadLine();
-                var selectedAccountant = accountants.Find(accountant => accountant.IdNumber == int.Parse(selectionNumber));
-                Console.WriteLine("\nMonthly Sales Report");
-                Console.WriteLine($"For: {selectedAccountant.FirstName}");
-                Console.WriteLine("---------------------------");
-                int count = 0;
-                foreach(var salesPerson in salesPeople)
-                {
-                    count++;
-                    Console.WriteLine($"\n{count}. {salesPerson.FirstName} {salesPerson.LastName}");
-                    Console.WriteLine("Clients:".PadLeft(10));
-                    // Add in foreach to print each of salespersons clients
-                    Console.WriteLine($"Total:");
-                }
-                Caboose();
-            }
-
-            void Caboose()
-            {
-                Console.WriteLine("\nPress 1 To Return to Main Menu Or Any Other Key To Exit");
-                var command = Console.ReadLine();
-                if (command == "1")
-                {
-                    showMenu = true;
-                }
             }
 
            void CreateNewSalesperson()
@@ -200,6 +155,16 @@ namespace Baby_Spice_ConsoleProject
 
             }
 
-         }
+            void Caboose()
+            {
+                Console.WriteLine("\nPress 1 To Return to Main Menu Or Any Other Key To Exit");
+                var command = Console.ReadLine();
+                if (command == "1")
+                {
+                    showMenu = true;
+                }
+            }
+
+        }
     }
 }
