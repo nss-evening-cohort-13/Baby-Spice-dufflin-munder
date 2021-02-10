@@ -157,12 +157,9 @@ namespace Baby_Spice_ConsoleProject
 
             void Caboose()
             {
-                Console.WriteLine("\nPress 1 To Return to Main Menu Or Any Other Key To Exit");
+                Console.WriteLine("\nPress Enter To Return To Main Menu");
                 var command = Console.ReadLine();
-                if (command == "1")
-                {
-                    showMenu = true;
-                }
+                showMenu = true;
             }
 
         }
