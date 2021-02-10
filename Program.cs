@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Baby_Spice_ConsoleProject.Employees;
+using System;
 using System.Collections.Generic;
-using Baby_Spice_ConsoleProject.Employees;
+using System.Linq;
+using System.Threading;
 
 namespace Baby_Spice_ConsoleProject
 {
@@ -19,14 +21,14 @@ namespace Baby_Spice_ConsoleProject
 
             var salesPeople = new List<SalesEmployee>
             {
-                new SalesEmployee("Jim", "Halpert"),
-                new SalesEmployee("Dwight", "Shrute"),
-                new SalesEmployee("Michael", "Scott")
+                new SalesEmployee("Jim", "Halpert", 1),
+                new SalesEmployee("Dwight", "Shrute", 2),
+                new SalesEmployee("Michael", "Scott", 3)
             };
 
             while (showMenu)
             {
-                MainMenu();
+                showMenu = MainMenu();
             }
 
             bool MainMenu()
@@ -44,6 +46,7 @@ namespace Baby_Spice_ConsoleProject
                 {
                     case "1":
                         showMenu = false;
+                        Console.Clear();
                         EnterSales();
                         return true;
                     case "2":
@@ -64,10 +67,39 @@ namespace Baby_Spice_ConsoleProject
             }
             void EnterSales()
             {
-                Console.WriteLine("\nWhich Sales Employee Are You?");
-                var x = Console.ReadLine();
-                Console.WriteLine($"{x}");
-                showMenu = true;
+                Console.WriteLine("Which Sales Employee Are You?");
+                foreach (var closer in salesPeople)
+                {
+                    Console.WriteLine($"{closer.IdNumber}. {closer.FirstName} {closer.LastName}");
+                }
+                
+                var selection = Console.ReadLine();
+                var selectedSeller = salesPeople.Find(closer => closer.IdNumber == int.Parse(selection));
+                Console.Clear();
+                Console.WriteLine($"Hi, {selectedSeller.FirstName}!");
+                Thread.Sleep(2000);
+                Console.Clear();
+                Console.WriteLine("Please Enter The Client's Name:");
+                var clientName = Console.ReadLine();
+
+                //TODO: make a random client ID with no repeats 
+                Console.WriteLine("Enter A Client ID");
+                var randomCliId = int.Parse(Console.ReadLine());
+
+                //moving on
+                Console.WriteLine("Enter The Dollar Amount For The Sale:");
+                var saleAmount = int.Parse(Console.ReadLine());
+
+                Console.WriteLine("Enter The Frequency Of Payment (I.E. Weekly, Monthly, etc."); //CAPSLOCK
+                var payDay = Console.ReadLine();
+
+                Console.WriteLine("Enter Contract Term Length: ");
+                var term = Console.ReadLine();
+
+                var sale = new Sale(selectedSeller, clientName, randomCliId, saleAmount, payDay, term);
+                selectedSeller.Sales.Add(sale);
+                Caboose();
+                
             }
 
             void GenerateReport()
@@ -93,6 +125,11 @@ namespace Baby_Spice_ConsoleProject
                     // Add in foreach to print each of salespersons clients
                     Console.WriteLine($"Total:");
                 }
+                Caboose();
+            }
+
+            void Caboose()
+            {
                 Console.WriteLine("\nPress 1 To Return to Main Menu Or Any Other Key To Exit");
                 var command = Console.ReadLine();
                 if (command == "1")
