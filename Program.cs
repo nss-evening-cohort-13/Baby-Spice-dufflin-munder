@@ -20,6 +20,9 @@ namespace Baby_Spice_ConsoleProject
            
             bool showMenu = true;
 
+            //holds a random client id
+            List<int> clientGeneratedId = new List<int>();
+
             var accountants = new List<AccountantEmployee>
             {
                 new AccountantEmployee("Oscar", "Martinez", 1),
@@ -73,7 +76,7 @@ namespace Baby_Spice_ConsoleProject
                 {
                     Console.WriteLine($"{closer.IdNumber}. {closer.FirstName} {closer.LastName}");
                 }
-                
+
                 var selection = Console.ReadLine();
                 var selectedSeller = salesPeople.Find(closer => closer.IdNumber == int.Parse(selection));
                 Console.Clear();
@@ -84,10 +87,18 @@ namespace Baby_Spice_ConsoleProject
                 var clientName = Console.ReadLine();
 
                 //TODO: make a random client ID with no repeats 
-                Console.WriteLine("Enter A Client ID");
-                var randomCliId = int.Parse(Console.ReadLine());
+                int number;
+                var rand = new Random();
+                do
+                {
+                    number = rand.Next(1000, 9999);
+                } while (clientGeneratedId.Contains(number));
+                clientGeneratedId.Add(number);
 
-                //moving on
+                int lastId = clientGeneratedId.Last();
+                Console.WriteLine($"Client ID is now {lastId}");
+
+                
                 Console.WriteLine("Enter The Dollar Amount For The Sale:");
                 var saleAmount = int.Parse(Console.ReadLine());
 
@@ -97,7 +108,7 @@ namespace Baby_Spice_ConsoleProject
                 Console.WriteLine("Enter Contract Term Length: ");
                 var term = Console.ReadLine();
 
-                var sale = new Sale(selectedSeller, clientName, randomCliId, saleAmount, payDay, term);
+                var sale = new Sale(selectedSeller, clientName, lastId, saleAmount, payDay, term);
                 selectedSeller.Sales.Add(sale);
                 Caboose();
                 
@@ -155,6 +166,7 @@ namespace Baby_Spice_ConsoleProject
 
             }
 
+            //ending method to attach to the end of each navigable menu method.
             void Caboose()
             {
                 Console.WriteLine("\nPress Enter To Return To Main Menu");
