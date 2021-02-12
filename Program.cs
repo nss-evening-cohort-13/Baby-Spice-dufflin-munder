@@ -94,7 +94,7 @@ namespace Baby_Spice_ConsoleProject
             {
                 foreach (var office in offices)
                 {
-                    Console.WriteLine($"{office.OfficeId}. {office.Name} - {office.Location}");
+                    AnsiConsole.Render(new Markup($"[white]{office.OfficeId}.[/] [wheat1][underline]{office.Name} - {office.Location}[/][/]\n"));
                 }
                 var officeSelection = int.Parse(Console.ReadLine());
                 selectedOffice = offices.Find(office => office.OfficeId == officeSelection);
