@@ -86,5 +86,10 @@ One of the menu options states to "Find a Sale", enter a client's # and display 
 ### ****Keep in mind the application should keep running until you press '5' to exit it....
 
 ## Stretch Goals ⭐
+Add the concept of Offices.  
 
-Create a projected 3 month report, calculating those sales over the 3 months.
+- Each sales person should be in an office.
+- I should have to select or create a new office on the first screen
+- I should be able to create a report based on the sales of an entire office rather than individual sales people.
+- The salesperson report should only contain the currently selected office
+
