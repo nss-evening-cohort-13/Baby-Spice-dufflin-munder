@@ -106,7 +106,16 @@ namespace Baby_Spice_ConsoleProject
 
             void CreateOffice()
             {
-                //write code 
+                Console.WriteLine("Create a new office, Provide Name!");
+                var name = Console.ReadLine();
+                Console.WriteLine("Provide Location");
+                var location = Console.ReadLine();
+
+                var newOffice = new Office(name, offices.Last().OfficeId + 1, location);
+
+                offices.Add(newOffice);
+
+              
             }
 
             
@@ -141,44 +150,54 @@ namespace Baby_Spice_ConsoleProject
                 }
             }
             void EnterSales()
+
             {
                 Console.WriteLine("Which Sales Employee Are You?");
-                foreach (var closer in salesPeople)
+                if (salesPeople.Capacity > 0)
                 {
-                    Console.WriteLine($"{closer.IdNumber}. {closer.FirstName} {closer.LastName}");
+                    foreach (var closer in salesPeople)
+                    {
+                        Console.WriteLine($"{closer.IdNumber}. {closer.FirstName} {closer.LastName}");
+                    }
+                    var selection = Console.ReadLine();
+                    var selectedSeller = salesPeople.Find(closer => closer.IdNumber == int.Parse(selection));
+                    Console.WriteLine($"Hi, {selectedSeller.FirstName}!");
+                    Console.WriteLine("Please Enter The Client's Name:");
+                    var clientName = Console.ReadLine();
+
+                    //TODO: make a random client ID with no repeats 
+                    int number;
+                    var rand = new Random();
+                    do
+                    {
+                        number = rand.Next(1000, 9999);
+                    } while (clientGeneratedId.Contains(number));
+                    clientGeneratedId.Add(number);
+
+                    int lastId = clientGeneratedId.Last();
+                    Console.WriteLine($"Client ID is now {lastId}");
+
+
+                    Console.WriteLine("Enter The Dollar Amount For The Sale:");
+                    var saleAmount = int.Parse(Console.ReadLine());
+
+                    Console.WriteLine("Enter The Frequency Of Payment (I.E. Weekly, Monthly, etc."); //CAPSLOCK
+                    var payDay = Console.ReadLine();
+
+                    Console.WriteLine("Enter Contract Term Length: ");
+                    var term = Console.ReadLine();
+
+                    var sale = new Sale(selectedSeller, clientName, lastId, saleAmount, payDay, term);
+                    selectedSeller.Sales.Add(sale);
+                    Caboose();
+                }
+                else
+                {
+                    Console.WriteLine("No sales employees please return to main menu and create one.");
+                    Caboose();
                 }
 
-                var selection = Console.ReadLine();
-                var selectedSeller = salesPeople.Find(closer => closer.IdNumber == int.Parse(selection));
-                Console.WriteLine($"Hi, {selectedSeller.FirstName}!");
-                Console.WriteLine("Please Enter The Client's Name:");
-                var clientName = Console.ReadLine();
-
-                //TODO: make a random client ID with no repeats 
-                int number;
-                var rand = new Random();
-                do
-                {
-                    number = rand.Next(1000, 9999);
-                } while (clientGeneratedId.Contains(number));
-                clientGeneratedId.Add(number);
-
-                int lastId = clientGeneratedId.Last();
-                Console.WriteLine($"Client ID is now {lastId}");
-
-                
-                Console.WriteLine("Enter The Dollar Amount For The Sale:");
-                var saleAmount = int.Parse(Console.ReadLine());
-
-                Console.WriteLine("Enter The Frequency Of Payment (I.E. Weekly, Monthly, etc."); //CAPSLOCK
-                var payDay = Console.ReadLine();
-
-                Console.WriteLine("Enter Contract Term Length: ");
-                var term = Console.ReadLine();
-
-                var sale = new Sale(selectedSeller, clientName, lastId, saleAmount, payDay, term);
-                selectedSeller.Sales.Add(sale);
-                Caboose();
+               
                 
             }
 
