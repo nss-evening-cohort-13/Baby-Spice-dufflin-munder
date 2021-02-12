@@ -10,19 +10,34 @@ namespace Baby_Spice_ConsoleProject
     {
         static void Main(string[] args)
         {
-            var salesPeople = new List<SalesEmployee>
+            //defining offices and employees
+            var offices = new List<Office>
             {
-                  new SalesEmployee("Dwight", "Hyte", 1),
-                  new SalesEmployee("Tim", "Halbert", 2),
-                  new SalesEmployee("Phyllis", "Leaf", 3)
+                new Office("Scott's Tots", 1, "Scranton"),
+                new Office("Head Branch", 2, "New York City"),
+                new Office("Watch A New Show Already", 3, "Nashville")
             };
-                                
-           
-            bool showMenu = true;
-            bool showGreetMenu = true;
 
-            //holds a random client id
-            List<int> clientGeneratedId = new List<int>();
+            offices[0].SalesEmployees = new List<SalesEmployee>
+            {
+                new SalesEmployee("Dwight", "Hyte", 1),
+                new SalesEmployee("Tim", "Halbert", 2),
+                new SalesEmployee("Phyllis", "Leaf", 3)
+            };
+
+            offices[1].SalesEmployees = new List<SalesEmployee>
+            {
+                new SalesEmployee("Dingle", "Dangle", 1),
+                new SalesEmployee("Hoingy", "Boingy", 2),
+                new SalesEmployee("Russell", "Bustle", 3)
+            };
+
+            offices[2].SalesEmployees = new List<SalesEmployee>
+            {
+                new SalesEmployee("Dwight", "Hyte", 1),
+                new SalesEmployee("Tim", "Halbert", 2),
+                new SalesEmployee("Phyllis", "Leaf", 3)
+            };
 
             var accountants = new List<AccountantEmployee>
             {
@@ -31,8 +46,20 @@ namespace Baby_Spice_ConsoleProject
                 new AccountantEmployee("Kevin", "Malone", 3)
             };
 
+            // setting global variables
+            bool showMenu = true;
+            bool showGreetMenu = true;
+            var selectedOffice = new Office("default", 0, default);
+            var salesPeople = selectedOffice.SalesEmployees;
+
+            // holds a random client id
+            List<int> clientGeneratedId = new List<int>();
+
+            // application greeting
             Console.WriteLine("WELCOME TO DUFFLIN MUNDER");
             Thread.Sleep(2000);
+
+            // menu logic
             while (showGreetMenu)
             {
                 showGreetMenu = greetMenu();
@@ -43,6 +70,8 @@ namespace Baby_Spice_ConsoleProject
                 showMenu = MainMenu();
             }
 
+
+            // methods
             bool greetMenu()
             {
                 Console.Clear();
@@ -65,7 +94,13 @@ namespace Baby_Spice_ConsoleProject
 
             void SelectOffice()
             {
-                //write code 
+                foreach (var office in offices)
+                {
+                    Console.WriteLine($"{office.OfficeId}. {office.Name} - {office.Location}");
+                }
+                var officeSelection = int.Parse(Console.ReadLine());
+                selectedOffice = offices.Find(office => office.OfficeId == officeSelection);
+                salesPeople = selectedOffice.SalesEmployees;
             }
 
             void CreateOffice()
@@ -73,10 +108,11 @@ namespace Baby_Spice_ConsoleProject
                 //write code 
             }
 
+            
             bool MainMenu()
             {
                 Console.Clear();
-                Console.WriteLine("Welcome to Dufflin/Munder Cardboard Co. ");
+                Console.WriteLine($"Welcome to the {selectedOffice.Name} branch of Dufflin/Munder Cardboard Co. ");
                 Console.WriteLine("Sales Portal!\n");
                 Console.WriteLine("1. Enter Sales");
                 Console.WriteLine("2. Generate Report For Accountant");
