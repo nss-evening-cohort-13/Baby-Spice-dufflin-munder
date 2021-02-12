@@ -58,7 +58,7 @@ namespace Baby_Spice_ConsoleProject
                         CreateNewSalesperson();                          
                         return true;
                     case "4":
-                        Console.WriteLine("Enter Sale Info");
+                        FindSaleInfo();
                         return true;
                     case "5":
                         return false;
@@ -153,6 +153,27 @@ namespace Baby_Spice_ConsoleProject
                 Console.WriteLine($"Hi, {salesFirstName}");
                 Caboose();
 
+            }
+
+            void FindSaleInfo()
+            {
+                Console.WriteLine("Enter a Client ID to find Report!");
+                 var searchId = int.Parse(Console.ReadLine());
+               foreach(var salesPerson in salesPeople)
+                {
+                   var foundSale = salesPerson.Sales.Find(sale => sale.ClientId == searchId);
+                   if (foundSale != null)
+                    {
+                         Console.WriteLine($"Sales Agent {salesPerson.FirstName} {salesPerson.LastName}");
+                         Console.WriteLine($"ClientID: {foundSale.ClientId}");
+                         Console.WriteLine($"Sale: ${foundSale.Amount}");
+                         Console.WriteLine($"Recurring: {foundSale.Recurring}");
+                         Console.WriteLine($"Time Frame:{foundSale.TimeFrame} ");
+                    }
+                   
+                   
+                }
+                Caboose();
             }
 
             void Caboose()
