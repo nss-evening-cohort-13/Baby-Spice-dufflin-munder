@@ -76,9 +76,9 @@ namespace Baby_Spice_ConsoleProject
             // methods
             bool greetMenu()
             {
-                Console.WriteLine("Please Select An Option: ");
-                Console.WriteLine("1. Select Office.");
-                Console.WriteLine("2. Create New Office.");
+                AnsiConsole.Render(new Markup("[white]Please Select An Option: [/]"));
+                AnsiConsole.Render(new Markup("\n1. [lime]Select[/] [wheat1]Office.[/]"));
+                AnsiConsole.Render(new Markup("\n2. [red]Create[/] [wheat1]New Office.[/]\n"));
 
                 switch (Console.ReadLine())
                 {
@@ -121,11 +121,12 @@ namespace Baby_Spice_ConsoleProject
             
             bool MainMenu()
             {
-                Console.WriteLine("1. Enter Sales");
-                Console.WriteLine("2. Generate Report For Accountant");
-                Console.WriteLine("3. Add New Sales Employee");
-                Console.WriteLine("4. Find A Sale");
-                Console.WriteLine("5. Exit");
+                AnsiConsole.Render(new Markup("[white]Please Select An Option: [/]"));
+                AnsiConsole.Render(new Markup("\n1. [cyan1]Enter[/] [wheat1]Sales[/]"));
+                AnsiConsole.Render(new Markup("\n2. [green1]Generate[/] [wheat1]Report For Accountant[/]"));
+                AnsiConsole.Render(new Markup("\n3. [fuchsia]Add New[/] [wheat1]Sales Employee[/]"));
+                AnsiConsole.Render(new Markup("\n4. [#ffff00]Find[/] [wheat1]a sale[/]"));
+                AnsiConsole.Render(new Markup("\n5. [bold red]Exit[/]\n"));
 
                 switch (Console.ReadLine())
                 {
@@ -161,8 +162,8 @@ namespace Baby_Spice_ConsoleProject
                     }
                     var selection = Console.ReadLine();
                     var selectedSeller = salesPeople.Find(closer => closer.IdNumber == int.Parse(selection));
-                    Console.WriteLine($"Hi, {selectedSeller.FirstName}!");
-                    Console.WriteLine("Please Enter The Client's Name:");
+                    AnsiConsole.Render(new Markup($"[wheat1]Hi,[/] [dodgerblue2]{selectedSeller.FirstName}![/]\n"));
+                    AnsiConsole.Render(new Markup("[wheat1]Please Enter The Client's[/] [aqua]Name:[/]\n"));
                     var clientName = Console.ReadLine();
 
                     //TODO: make a random client ID with no repeats 
@@ -175,16 +176,15 @@ namespace Baby_Spice_ConsoleProject
                     clientGeneratedId.Add(number);
 
                     int lastId = clientGeneratedId.Last();
-                    Console.WriteLine($"Client ID is now {lastId}");
-
-
-                    Console.WriteLine("Enter The Dollar Amount For The Sale:");
+                    AnsiConsole.Render(new Markup($"[wheat1]Client ID is now[/] [red]{lastId}[/]\n"));
+                    AnsiConsole.Render(new Markup("[wheat1]Enter The[/] [lime]Dollar Amount[/] [wheat1]For The Sale:[/]\n"));
+ 
                     var saleAmount = int.Parse(Console.ReadLine());
 
-                    Console.WriteLine("Enter The Frequency Of Payment (I.E. Weekly, Monthly, etc."); //CAPSLOCK
+                    AnsiConsole.Render(new Markup($"[wheat1]Enter The[/] [fuchsia]Frequency[/] [wheat1]Of Payment (I.E. Weekly, Monthly, etc.)[/]\n"));
                     var payDay = Console.ReadLine();
 
-                    Console.WriteLine("Enter Contract Term Length: ");
+                    AnsiConsole.Render(new Markup($"[wheat1]Enter Contract[/] [darkorange]Term Length: [/]\n"));
                     var term = Console.ReadLine();
 
                     var sale = new Sale(selectedSeller, clientName, lastId, saleAmount, payDay, term);
