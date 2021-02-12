@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using Spectre.Console;
 
 namespace Baby_Spice_ConsoleProject
 {
@@ -46,6 +47,9 @@ namespace Baby_Spice_ConsoleProject
                 new AccountantEmployee("Kevin", "Malone", 3)
             };
 
+            var rule = new Rule("[green]WELCOME TO DUFFLIN MUNDER[/]");
+            AnsiConsole.Render(rule);
+
             // setting global variables
             bool showMenu = true;
             bool showGreetMenu = true;
@@ -55,9 +59,7 @@ namespace Baby_Spice_ConsoleProject
             // holds a random client id
             List<int> clientGeneratedId = new List<int>();
 
-            // application greeting
-            Console.WriteLine("WELCOME TO DUFFLIN MUNDER");
-            Thread.Sleep(2000);
+
 
             // menu logic
             while (showGreetMenu)
@@ -74,7 +76,6 @@ namespace Baby_Spice_ConsoleProject
             // methods
             bool greetMenu()
             {
-                Console.Clear();
                 Console.WriteLine("Please Select An Option: ");
                 Console.WriteLine("1. Select Office.");
                 Console.WriteLine("2. Create New Office.");
@@ -111,9 +112,6 @@ namespace Baby_Spice_ConsoleProject
             
             bool MainMenu()
             {
-                Console.Clear();
-                Console.WriteLine($"Welcome to the {selectedOffice.Name} branch of Dufflin/Munder Cardboard Co. ");
-                Console.WriteLine("Sales Portal!\n");
                 Console.WriteLine("1. Enter Sales");
                 Console.WriteLine("2. Generate Report For Accountant");
                 Console.WriteLine("3. Add New Sales Employee");
@@ -124,7 +122,6 @@ namespace Baby_Spice_ConsoleProject
                 {
                     case "1":
                         showMenu = false;
-                        Console.Clear();
                         EnterSales();
                         return true;
                     case "2":
@@ -153,10 +150,7 @@ namespace Baby_Spice_ConsoleProject
 
                 var selection = Console.ReadLine();
                 var selectedSeller = salesPeople.Find(closer => closer.IdNumber == int.Parse(selection));
-                Console.Clear();
                 Console.WriteLine($"Hi, {selectedSeller.FirstName}!");
-                Thread.Sleep(2000);
-                Console.Clear();
                 Console.WriteLine("Please Enter The Client's Name:");
                 var clientName = Console.ReadLine();
 
