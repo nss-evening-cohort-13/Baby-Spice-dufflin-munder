@@ -115,10 +115,10 @@ namespace Baby_Spice_ConsoleProject
 
                 offices.Add(newOffice);
 
-              
+
             }
 
-            
+
             bool MainMenu()
             {
                 Console.WriteLine("1. Enter Sales");
@@ -138,7 +138,7 @@ namespace Baby_Spice_ConsoleProject
                         GenerateReport();
                         return true;
                     case "3":
-                        CreateNewSalesperson();                          
+                        CreateNewSalesperson();
                         return true;
                     case "4":
                         FindSaleInfo();
@@ -161,6 +161,7 @@ namespace Baby_Spice_ConsoleProject
                     }
                     var selection = Console.ReadLine();
                     var selectedSeller = salesPeople.Find(closer => closer.IdNumber == int.Parse(selection));
+
                     Console.WriteLine($"Hi, {selectedSeller.FirstName}!");
                     Console.WriteLine("Please Enter The Client's Name:");
                     var clientName = Console.ReadLine();
@@ -197,8 +198,8 @@ namespace Baby_Spice_ConsoleProject
                     Caboose();
                 }
 
-               
-                
+
+
             }
 
             void GenerateReport()
@@ -212,29 +213,55 @@ namespace Baby_Spice_ConsoleProject
                 }
                 var selectionNumber = Console.ReadLine();
                 var selectedAccountant = accountants.Find(accountant => accountant.IdNumber == int.Parse(selectionNumber));
-                Console.WriteLine("\nMonthly Sales Report");
-                Console.WriteLine($"For: {selectedAccountant.FirstName}");
-                Console.WriteLine("---------------------------");
-                int salesPersonCount = 0;
-                foreach (var salesPerson in salesPeople)
+                Console.WriteLine("Please select which report you would like to generate: \n1. Office Wide Report\n2. Itemized Salesperson Report ");
+
+
+                switch (Console.ReadLine())
                 {
-                    salesPersonCount++;
-                    Console.WriteLine($"\n{salesPersonCount}. {salesPerson.FirstName} {salesPerson.LastName}");
-                    Console.WriteLine("Clients:".PadLeft(10));
-                    int saleCount = 0;
-                    int salesTotal = 0;
-                    foreach (var sale in salesPerson.Sales)
-                    {
-                        saleCount++;
-                        Console.WriteLine($"\t{saleCount}. {sale.Client}");
-                        salesTotal += sale.Amount;
-                    }
-                    Console.WriteLine($"Total: ${salesTotal}");
+                    case "1":
+                        Console.WriteLine("\nTotal Office Sales Report");
+                        Console.WriteLine($"For: {selectedAccountant.FirstName}");
+                        Console.WriteLine("---------------------------");
+                        var grandTotal = 0;
+                        foreach (var salesPerson in salesPeople)
+                        {
+                            foreach (var sale in salesPerson.Sales)
+                            {
+                                Console.WriteLine($"- {sale.Client}: ${sale.Amount}");
+                                grandTotal += sale.Amount;
+                            }
+                        }
+                        Console.WriteLine($"Your office total sales are: ${grandTotal}");
+                        break;
+                    case "2":
+                        Console.WriteLine("\nItemized Sales Report");
+                        Console.WriteLine($"For: {selectedAccountant.FirstName}");
+                        Console.WriteLine("---------------------------");
+                        int salesPersonCount = 0;
+                        foreach (var salesPerson in salesPeople)
+                        {
+                            salesPersonCount++;
+                            Console.WriteLine($"\n{salesPersonCount}. {salesPerson.FirstName} {salesPerson.LastName}");
+                            Console.WriteLine("Clients:".PadLeft(10));
+                            int saleCount = 0;
+                            int salesTotal = 0;
+                            foreach (var sale in salesPerson.Sales)
+                            {
+                                saleCount++;
+                                Console.WriteLine($"\t{saleCount}. {sale.Client}");
+                                salesTotal += sale.Amount;
+                            }
+                            Console.WriteLine($"Total: ${salesTotal}");
+                        }
+                        break;
                 }
+
+
+
                 Caboose();
             }
 
-           void CreateNewSalesperson()
+            void CreateNewSalesperson()
             {
                 Console.WriteLine("Enter new salesperson's first name:");
                 string salesFirstName;
@@ -245,7 +272,7 @@ namespace Baby_Spice_ConsoleProject
                 salesLastName = Console.ReadLine();
 
                 var newSalesEmployee = new SalesEmployee(salesFirstName, salesLastName, salesPeople.Last().IdNumber + 1);
-                
+
                 salesPeople.Add(newSalesEmployee);
 
                 Console.WriteLine($"Hi, {salesFirstName}");
@@ -256,20 +283,20 @@ namespace Baby_Spice_ConsoleProject
             void FindSaleInfo()
             {
                 Console.WriteLine("Enter a Client ID to find Report!");
-                 var searchId = int.Parse(Console.ReadLine());
-               foreach(var salesPerson in salesPeople)
+                var searchId = int.Parse(Console.ReadLine());
+                foreach (var salesPerson in salesPeople)
                 {
-                   var foundSale = salesPerson.Sales.Find(sale => sale.ClientId == searchId);
-                   if (foundSale != null)
+                    var foundSale = salesPerson.Sales.Find(sale => sale.ClientId == searchId);
+                    if (foundSale != null)
                     {
-                         Console.WriteLine($"Sales Agent {salesPerson.FirstName} {salesPerson.LastName}");
-                         Console.WriteLine($"ClientID: {foundSale.ClientId}");
-                         Console.WriteLine($"Sale: ${foundSale.Amount}");
-                         Console.WriteLine($"Recurring: {foundSale.Recurring}");
-                         Console.WriteLine($"Time Frame:{foundSale.TimeFrame} ");
+                        Console.WriteLine($"Sales Agent {salesPerson.FirstName} {salesPerson.LastName}");
+                        Console.WriteLine($"ClientID: {foundSale.ClientId}");
+                        Console.WriteLine($"Sale: ${foundSale.Amount}");
+                        Console.WriteLine($"Recurring: {foundSale.Recurring}");
+                        Console.WriteLine($"Time Frame:{foundSale.TimeFrame} ");
                     }
-                   
-                   
+
+
                 }
                 Caboose();
             }
