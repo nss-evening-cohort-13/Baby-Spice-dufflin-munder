@@ -35,9 +35,9 @@ namespace Baby_Spice_ConsoleProject
 
             offices[2].SalesEmployees = new List<SalesEmployee>
             {
-                new SalesEmployee("Dwight", "Hyte", 1),
-                new SalesEmployee("Tim", "Halbert", 2),
-                new SalesEmployee("Phyllis", "Leaf", 3)
+                new SalesEmployee("Ronald", "McDonald", 1),
+                new SalesEmployee("Charlie", "Day", 2),
+                new SalesEmployee("Dee", "Reynolds", 3)
             };
 
             var accountants = new List<AccountantEmployee>
@@ -59,8 +59,6 @@ namespace Baby_Spice_ConsoleProject
             // holds a random client id
             List<int> clientGeneratedId = new List<int>();
 
-
-
             // menu logic
             while (showGreetMenu)
             {
@@ -71,7 +69,6 @@ namespace Baby_Spice_ConsoleProject
             {
                 showMenu = MainMenu();
             }
-
 
             // methods
             bool greetMenu()
@@ -106,18 +103,14 @@ namespace Baby_Spice_ConsoleProject
 
             void CreateOffice()
             {
-                Console.WriteLine("Create a new office, Provide Name!");
+                Console.WriteLine("Create New Office");
+                Console.WriteLine("Enter Name:");
                 var name = Console.ReadLine();
-                Console.WriteLine("Provide Location");
+                Console.WriteLine("Enter Location");
                 var location = Console.ReadLine();
-
                 var newOffice = new Office(name, offices.Last().OfficeId + 1, location);
-
                 offices.Add(newOffice);
-
-
             }
-
 
             bool MainMenu()
             {
@@ -125,7 +118,7 @@ namespace Baby_Spice_ConsoleProject
                 AnsiConsole.Render(new Markup("\n1. [cyan1]Enter[/] [wheat1]Sales[/]"));
                 AnsiConsole.Render(new Markup("\n2. [green1]Generate[/] [wheat1]Report For Accountant[/]"));
                 AnsiConsole.Render(new Markup("\n3. [fuchsia]Add New[/] [wheat1]Sales Employee[/]"));
-                AnsiConsole.Render(new Markup("\n4. [#ffff00]Find[/] [wheat1]a sale[/]"));
+                AnsiConsole.Render(new Markup("\n4. [#ffff00]Find[/] [wheat1]A Sale[/]"));
                 AnsiConsole.Render(new Markup("\n5. [bold red]Exit[/]\n"));
 
                 switch (Console.ReadLine())
@@ -150,8 +143,8 @@ namespace Baby_Spice_ConsoleProject
                         return true;
                 }
             }
-            void EnterSales()
 
+            void EnterSales()
             {
                 Console.WriteLine("Which Sales Employee Are You?");
                 if (salesPeople.Capacity > 0)
@@ -195,12 +188,9 @@ namespace Baby_Spice_ConsoleProject
                 }
                 else
                 {
-                    Console.WriteLine("No sales employees please return to main menu and create one.");
+                    Console.WriteLine("No Current Sales Employees, Please Return To Main Menu To Add An Employee.");
                     Caboose();
                 }
-
-
-
             }
 
             void GenerateReport()
@@ -214,8 +204,7 @@ namespace Baby_Spice_ConsoleProject
                 }
                 var selectionNumber = Console.ReadLine();
                 var selectedAccountant = accountants.Find(accountant => accountant.IdNumber == int.Parse(selectionNumber));
-                Console.WriteLine("Please select which report you would like to generate: \n1. Office Wide Report\n2. Itemized Salesperson Report ");
-
+                Console.WriteLine("Please Select Which Report You Would Like To Generate: \n1. Office Wide Report\n2. Itemized Salesperson Report \n3. Specific Salesperson Report ");
 
                 switch (Console.ReadLine())
                 {
@@ -255,20 +244,41 @@ namespace Baby_Spice_ConsoleProject
                             Console.WriteLine($"Total: ${salesTotal}");
                         }
                         break;
+                    case "3":
+                        Console.WriteLine("Select Which Salesperson To Generate A Report For:");
+                        foreach (var salesPerson in salesPeople)
+                        {
+                            Console.WriteLine($"{salesPerson.IdNumber}. {salesPerson.FirstName} {salesPerson.LastName}");
+                        }
+                        var selection = int.Parse(Console.ReadLine());
+                        var selectedSalesPerson = salesPeople.Find(salesPerson => salesPerson.IdNumber == selection);
+                        Console.WriteLine("\nItemized Sales Report");
+                        Console.WriteLine($"For: {selectedAccountant.FirstName}");
+                        Console.WriteLine("---------------------------");
+                        Console.WriteLine($"\n{selectedSalesPerson.FirstName} {selectedSalesPerson.LastName}'s Sales:");
+                        var total = 0;
+                        foreach (var sale in selectedSalesPerson.Sales)
+                        {
+                            Console.WriteLine($"\nClient Name: \t{sale.Client}");
+                            Console.WriteLine($"Client ID: \t{sale.ClientId}");
+                            Console.WriteLine($"Sale Amount: \t${sale.Amount}");
+                            Console.WriteLine($"Frequency: \t{sale.Recurring}");
+                            Console.WriteLine($"Contract Length: \t{sale.TimeFrame}");
+                            total += sale.Amount;
+                        }
+                        Console.WriteLine($"\n Total Sales: ${total}");
+                        break;
                 }
-
-
-
                 Caboose();
             }
 
             void CreateNewSalesperson()
             {
-                Console.WriteLine("Enter new salesperson's first name:");
+                Console.WriteLine("Enter New Salesperson's First Name:");
                 string salesFirstName;
                 salesFirstName = Console.ReadLine();
 
-                Console.WriteLine("Enter new salesperson's last name:");
+                Console.WriteLine("Enter New Salesperson's Last Name:");
                 string salesLastName;
                 salesLastName = Console.ReadLine();
 
@@ -278,37 +288,39 @@ namespace Baby_Spice_ConsoleProject
 
                 Console.WriteLine($"Hi, {salesFirstName}");
                 Caboose();
-
             }
 
             void FindSaleInfo()
             {
-                Console.WriteLine("Enter a Client ID to find Report!");
+                Console.WriteLine("Enter A Client ID To Find Report!");
                 var searchId = int.Parse(Console.ReadLine());
                 foreach (var salesPerson in salesPeople)
                 {
                     var foundSale = salesPerson.Sales.Find(sale => sale.ClientId == searchId);
                     if (foundSale != null)
                     {
-                        Console.WriteLine($"Sales Agent {salesPerson.FirstName} {salesPerson.LastName}");
-                        Console.WriteLine($"ClientID: {foundSale.ClientId}");
-                        Console.WriteLine($"Sale: ${foundSale.Amount}");
-                        Console.WriteLine($"Recurring: {foundSale.Recurring}");
-                        Console.WriteLine($"Time Frame:{foundSale.TimeFrame} ");
+                        Console.WriteLine($"Sales Agent: {salesPerson.FirstName} {salesPerson.LastName}");
+                        Console.WriteLine($"\n Client Name: {foundSale.Client}");
+                        Console.WriteLine($"Client ID: {foundSale.ClientId}");
+                        Console.WriteLine($"Sale Amount: ${foundSale.Amount}");
+                        Console.WriteLine($"Frequency: {foundSale.Recurring}");
+                        Console.WriteLine($"Contract Length: {foundSale.TimeFrame} ");
                     }
-
-
+                    else
+                    {
+                        Console.WriteLine("No Client Found With That ID");
+                        break;
+                    }
                 }
                 Caboose();
             }
 
             void Caboose()
             {
-                Console.WriteLine("\nPress Enter To Return To Main Menu");
+                AnsiConsole.Render(new Markup("[blue]\nPress Enter To Return To Main Menu[/]"));
                 var command = Console.ReadLine();
                 showMenu = true;
             }
-
         }
     }
 }
