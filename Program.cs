@@ -19,6 +19,7 @@ namespace Baby_Spice_ConsoleProject
                                 
            
             bool showMenu = true;
+            bool showGreetMenu = true;
 
             //holds a random client id
             List<int> clientGeneratedId = new List<int>();
@@ -30,9 +31,46 @@ namespace Baby_Spice_ConsoleProject
                 new AccountantEmployee("Kevin", "Malone", 3)
             };
 
+            Console.WriteLine("WELCOME TO DUFFLIN MUNDER");
+            Thread.Sleep(2000);
+            while (showGreetMenu)
+            {
+                showGreetMenu = greetMenu();
+            }
+
             while (showMenu)
             {
                 showMenu = MainMenu();
+            }
+
+            bool greetMenu()
+            {
+                Console.Clear();
+                Console.WriteLine("Please Select An Option: ");
+                Console.WriteLine("1. Select Office.");
+                Console.WriteLine("2. Create New Office.");
+
+                switch (Console.ReadLine())
+                {
+                    case "1":
+                        SelectOffice();
+                        return false;
+                    case "2":
+                        CreateOffice();
+                        return true;
+                    default:
+                        return true;
+                }
+            }
+
+            void SelectOffice()
+            {
+                //write code 
+            }
+
+            void CreateOffice()
+            {
+                //write code 
             }
 
             bool MainMenu()
