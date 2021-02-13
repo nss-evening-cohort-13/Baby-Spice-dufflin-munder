@@ -216,6 +216,8 @@ namespace Baby_Spice_ConsoleProject
 
             void GenerateReport()
             {
+                Console.Clear();
+                AnsiConsole.Render(rule);
                 AnsiConsole.Markup("\n[wheat1]Generate A Report[/]\n");
                 AnsiConsole.Markup("[wheat1]---------------------------[/]\n");
                 AnsiConsole.Markup("[wheat1]Choose Which Accountant To Generate A Report For:[/]\n");
@@ -344,7 +346,6 @@ namespace Baby_Spice_ConsoleProject
                     if (!found)
                     {
                         AnsiConsole.Render(new Markup("[bold red]\n No Client Found With That ID[/]"));
-                        
                     }
 
                 Caboose();
