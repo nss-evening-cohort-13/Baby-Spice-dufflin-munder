@@ -190,7 +190,7 @@ namespace Baby_Spice_ConsoleProject
                     int lastId = clientGeneratedId.Last();
                     AnsiConsole.Markup($"[wheat1]Client ID is now[/] [red]{lastId}[/]\n");
                     AnsiConsole.Markup("[wheat1]Enter The[/] [lime]Dollar Amount[/] [wheat1]For The Sale:[/]\n");
- 
+                    
                     var saleAmount = int.Parse(Console.ReadLine());
                     if (saleAmount <= 0)
                     {
@@ -296,9 +296,6 @@ namespace Baby_Spice_ConsoleProject
 
             void CreateNewSalesperson()
             {
-
-                
-=======
                 Console.Clear();
                 AnsiConsole.Render(rule);
                 AnsiConsole.Render(new Markup("[wheat1]\nEnter New Salesperson's First Name: [/]"));
@@ -309,11 +306,15 @@ namespace Baby_Spice_ConsoleProject
                 AnsiConsole.Render(new Markup("[wheat1]Enter New Salesperson's Last Name: [/]"));
                 string salesLastName;
                 salesLastName = Console.ReadLine();
-
-                var newSalesEmployee = new SalesEmployee(salesFirstName, salesLastName, salesPeople.Last().IdNumber + 1);
-
-                salesPeople.Add(newSalesEmployee);
-
+                if (salesPeople.Count == 0)
+                {
+                    var newSalesEmployee = new SalesEmployee(salesFirstName, salesLastName, 1);
+                    salesPeople.Add(newSalesEmployee);
+                } else
+                {
+                    var newSalesEmployee = new SalesEmployee(salesFirstName, salesLastName, salesPeople.Last().IdNumber + 1);
+                    salesPeople.Add(newSalesEmployee);
+                }
                 AnsiConsole.Render(new Markup($"[deepskyblue1]Hi, {salesFirstName}[/]"));
                 Caboose();
             }
