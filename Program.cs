@@ -47,6 +47,7 @@ namespace Baby_Spice_ConsoleProject
                 new AccountantEmployee("Kevin", "Malone", 3)
             };
 
+            // rendering welcome graphic and trademark
             AnsiConsole.Render(
                 new FigletText("DUFFLIN MUNDER SALES CONSOLE")
                     .Centered()
@@ -69,13 +70,14 @@ namespace Baby_Spice_ConsoleProject
             {
                 showGreetMenu = greetMenu();
             }
-
             while (showMenu)
             {
                 showMenu = MainMenu();
             }
 
-            // methods
+            // METHODS
+
+            //initial greeting menu
             bool greetMenu()
             {
                 AnsiConsole.Markup("[white]Please Select An Option: [/]");
@@ -96,6 +98,7 @@ namespace Baby_Spice_ConsoleProject
                 }
             }
 
+            //office selection
             void SelectOffice()
             {
                 Console.Clear();
@@ -109,6 +112,7 @@ namespace Baby_Spice_ConsoleProject
                 salesPeople = selectedOffice.SalesEmployees;
             }
 
+            //office creation
             void CreateOffice()
             {
                 Console.Clear();
@@ -124,6 +128,7 @@ namespace Baby_Spice_ConsoleProject
                 offices.Add(newOffice);
             }
 
+            //menu displayed once office is selected
             bool MainMenu()
             {
                 Console.Clear();
@@ -135,7 +140,6 @@ namespace Baby_Spice_ConsoleProject
                 AnsiConsole.Render(new Markup("\n4. [#ffff00]Find[/] [wheat1]A Sale[/]"));
                 AnsiConsole.Render(new Markup("\n5. [bold red]Exit[/]\n"));
                 
-
                 switch (Console.ReadLine())
                 {
                     case "1":
@@ -159,6 +163,7 @@ namespace Baby_Spice_ConsoleProject
                 }
             }
 
+            // menu selection for entering a new sale
             void EnterSales()
             {
                 Console.Clear();
@@ -214,6 +219,7 @@ namespace Baby_Spice_ConsoleProject
                 }
             }
 
+            // menu selection for generating reports
             void GenerateReport()
             {
                 Console.Clear();
@@ -296,6 +302,7 @@ namespace Baby_Spice_ConsoleProject
                 Caboose();
             }
 
+            // menu selection for adding a new salesperson
             void CreateNewSalesperson()
             {
                 Console.Clear();
@@ -321,6 +328,7 @@ namespace Baby_Spice_ConsoleProject
                 Caboose();
             }
 
+            // menu selection for finding information on a specific sale
             void FindSaleInfo()
             {
                 Console.Clear();
@@ -347,10 +355,10 @@ namespace Baby_Spice_ConsoleProject
                     {
                         AnsiConsole.Render(new Markup("[bold red]\n No Client Found With That ID[/]"));
                     }
-
                 Caboose();
             }
 
+            // prompt to return user to the main menu
             void Caboose()
             {
                 AnsiConsole.Render(new Markup("[blue]\nPress Enter To Return To Main Menu[/]"));
