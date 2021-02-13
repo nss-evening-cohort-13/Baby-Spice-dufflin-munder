@@ -298,7 +298,6 @@ namespace Baby_Spice_ConsoleProject
             {
 
                 
-=======
                 Console.Clear();
                 AnsiConsole.Render(rule);
                 AnsiConsole.Render(new Markup("[wheat1]\nEnter New Salesperson's First Name: [/]"));
