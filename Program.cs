@@ -47,8 +47,13 @@ namespace Baby_Spice_ConsoleProject
                 new AccountantEmployee("Kevin", "Malone", 3)
             };
 
-            var rule = new Rule("[green]WELCOME TO DUFFLIN MUNDER[/]");
-            AnsiConsole.Render(rule);
+            AnsiConsole.Render(
+                new FigletText("DUFFLIN MUNDER SALES CONSOLE")
+                    .Centered()
+                    .Color(Color.Wheat1));
+            Thread.Sleep(3000);
+            Console.Clear();
+            var rule = new Rule("[green]DUFFLIN MUNDER(tm) all rights reserved 2021.[/]");
 
             // setting global variables
             bool showMenu = true;
@@ -73,6 +78,7 @@ namespace Baby_Spice_ConsoleProject
             // methods
             bool greetMenu()
             {
+                AnsiConsole.Render(rule);
                 AnsiConsole.Render(new Markup("[white]Please Select An Option: [/]"));
                 AnsiConsole.Render(new Markup("\n1. [lime]Select[/] [wheat1]Office.[/]"));
                 AnsiConsole.Render(new Markup("\n2. [red]Create[/] [wheat1]New Office.[/]\n"));
@@ -84,6 +90,7 @@ namespace Baby_Spice_ConsoleProject
                         return false;
                     case "2":
                         CreateOffice();
+                        Console.Clear();
                         return true;
                     default:
                         return true;
@@ -92,6 +99,8 @@ namespace Baby_Spice_ConsoleProject
 
             void SelectOffice()
             {
+                Console.Clear();
+                AnsiConsole.Render(rule);
                 foreach (var office in offices)
                 {
                     AnsiConsole.Render(new Markup($"[white]{office.OfficeId}.[/] [wheat1][underline]{office.Name} - {office.Location}[/][/]\n"));
@@ -103,6 +112,8 @@ namespace Baby_Spice_ConsoleProject
 
             void CreateOffice()
             {
+                Console.Clear();
+                AnsiConsole.Render(rule);
                 Console.WriteLine("Create New Office");
                 Console.WriteLine("Enter Name:");
                 var name = Console.ReadLine();
@@ -114,12 +125,15 @@ namespace Baby_Spice_ConsoleProject
 
             bool MainMenu()
             {
+                Console.Clear();
+                AnsiConsole.Render(rule);
                 AnsiConsole.Render(new Markup("[white]Please Select An Option: [/]"));
                 AnsiConsole.Render(new Markup("\n1. [cyan1]Enter[/] [wheat1]Sales[/]"));
                 AnsiConsole.Render(new Markup("\n2. [green1]Generate[/] [wheat1]Report For Accountant[/]"));
                 AnsiConsole.Render(new Markup("\n3. [fuchsia]Add New[/] [wheat1]Sales Employee[/]"));
                 AnsiConsole.Render(new Markup("\n4. [#ffff00]Find[/] [wheat1]A Sale[/]"));
                 AnsiConsole.Render(new Markup("\n5. [bold red]Exit[/]\n"));
+                
 
                 switch (Console.ReadLine())
                 {
@@ -146,12 +160,14 @@ namespace Baby_Spice_ConsoleProject
 
             void EnterSales()
             {
-                Console.WriteLine("Which Sales Employee Are You?");
+                Console.Clear();
+                AnsiConsole.Render(rule);
+                AnsiConsole.Markup("[wheat1]Which Sales Employee Are You?[/]\n");
                 if (salesPeople.Capacity > 0)
                 {
                     foreach (var closer in salesPeople)
                     {
-                        Console.WriteLine($"{closer.IdNumber}. {closer.FirstName} {closer.LastName}");
+                        AnsiConsole.Markup($"[dodgerblue2]{closer.IdNumber}. {closer.FirstName} {closer.LastName}[/]\n");
                     }
                     var selection = Console.ReadLine();
                     var selectedSeller = salesPeople.Find(closer => closer.IdNumber == int.Parse(selection));
@@ -171,15 +187,19 @@ namespace Baby_Spice_ConsoleProject
                     clientGeneratedId.Add(number);
 
                     int lastId = clientGeneratedId.Last();
-                    AnsiConsole.Render(new Markup($"[wheat1]Client ID is now[/] [red]{lastId}[/]\n"));
-                    AnsiConsole.Render(new Markup("[wheat1]Enter The[/] [lime]Dollar Amount[/] [wheat1]For The Sale:[/]\n"));
+                    AnsiConsole.Markup($"[wheat1]Client ID is now[/] [red]{lastId}[/]\n");
+                    AnsiConsole.Markup("[wheat1]Enter The[/] [lime]Dollar Amount[/] [wheat1]For The Sale:[/]\n");
  
                     var saleAmount = int.Parse(Console.ReadLine());
+                    if (saleAmount <= 0)
+                    {
+                        AnsiConsole.Markup("[red]I DECLARE BANKRUPTCY![/]\n");
+                    }
 
-                    AnsiConsole.Render(new Markup($"[wheat1]Enter The[/] [fuchsia]Frequency[/] [wheat1]Of Payment (I.E. Weekly, Monthly, etc.)[/]\n"));
+                    AnsiConsole.Markup($"[wheat1]Enter The[/] [fuchsia]Frequency[/] [wheat1]Of Payment (I.E. Weekly, Monthly, etc.)[/]\n");
                     var payDay = Console.ReadLine();
 
-                    AnsiConsole.Render(new Markup($"[wheat1]Enter Contract[/] [darkorange]Term Length: [/]\n"));
+                    AnsiConsole.Markup($"[wheat1]Enter Contract[/] [darkorange]Term Length: [/]\n");
                     var term = Console.ReadLine();
 
                     var sale = new Sale(selectedSeller, clientName, lastId, saleAmount, payDay, term);
@@ -195,6 +215,8 @@ namespace Baby_Spice_ConsoleProject
 
             void GenerateReport()
             {
+                Console.Clear();
+                AnsiConsole.Render(rule);
                 Console.WriteLine("\nGenerate A Report");
                 Console.WriteLine("---------------------------");
                 Console.WriteLine("Choose Which Accountant To Generate A Report For:");
@@ -274,6 +296,8 @@ namespace Baby_Spice_ConsoleProject
 
             void CreateNewSalesperson()
             {
+                Console.Clear();
+                AnsiConsole.Render(rule);
                 Console.WriteLine("Enter New Salesperson's First Name:");
                 string salesFirstName;
                 salesFirstName = Console.ReadLine();
@@ -292,6 +316,8 @@ namespace Baby_Spice_ConsoleProject
 
             void FindSaleInfo()
             {
+                Console.Clear();
+                AnsiConsole.Render(rule);
                 Console.WriteLine("Enter A Client ID To Find Report!");
                 var searchId = int.Parse(Console.ReadLine());
                 foreach (var salesPerson in salesPeople)
