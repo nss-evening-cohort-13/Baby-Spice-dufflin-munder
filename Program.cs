@@ -113,10 +113,12 @@ namespace Baby_Spice_ConsoleProject
             {
                 Console.Clear();
                 AnsiConsole.Render(rule);
-                Console.WriteLine("Create New Office");
-                Console.WriteLine("Enter Name:");
+
+                AnsiConsole.Render(new Markup("[wheat1]Create New Office: [/]"));
+                AnsiConsole.Render(new Markup("[bold red]Enter Name [/]"));
                 var name = Console.ReadLine();
-                Console.WriteLine("Enter Location");
+                Console.WriteLine("------------");
+                AnsiConsole.Render(new Markup("[bold red]Enter Location [/]"));
                 var location = Console.ReadLine();
                 var newOffice = new Office(name, offices.Last().OfficeId + 1, location);
                 offices.Add(newOffice);
@@ -316,7 +318,8 @@ namespace Baby_Spice_ConsoleProject
             {
                 Console.Clear();
                 AnsiConsole.Render(rule);
-                Console.WriteLine("Enter A Client ID To Find Report!");
+                AnsiConsole.Render(new Markup("[#ffff00]\n Enter A Client ID To Find Report![/]\n"));
+
                 var searchId = int.Parse(Console.ReadLine());
                 var found = false;
                 foreach (var salesPerson in salesPeople)
@@ -324,19 +327,21 @@ namespace Baby_Spice_ConsoleProject
                     var foundSale = salesPerson.Sales.Find(sale => sale.ClientId == searchId);
                     if (foundSale != null)
                     {
-                        Console.WriteLine($"Sales Agent: {salesPerson.FirstName} {salesPerson.LastName}");
-                        Console.WriteLine($"\n Client Name: {foundSale.Client}");
-                        Console.WriteLine($"Client ID: {foundSale.ClientId}");
-                        Console.WriteLine($"Sale Amount: ${foundSale.Amount}");
-                        Console.WriteLine($"Frequency: {foundSale.Recurring}");
-                        Console.WriteLine($"Contract Length: {foundSale.TimeFrame} ");
+                        AnsiConsole.Markup($"[#a082ec]Sales Agent: {salesPerson.FirstName} {salesPerson.LastName}[/]");
+                        AnsiConsole.Markup($"[#bf7ed8]\n Client Name: {foundSale.Client}[/]");
+                        AnsiConsole.Markup($"[#6381dc]\n Client ID: {foundSale.ClientId}[/]");
+                        AnsiConsole.Markup($"[#0fdb5b]\n Sale Amount: ${foundSale.Amount}[/]");
+                        AnsiConsole.Markup($"[#e48c62]\n Frequency: {foundSale.Recurring}[/]");
+                        AnsiConsole.Markup($"[#a79728]\n Contract Length: {foundSale.TimeFrame}[/] ");
                         found = true;
+                    } 
+                }
+                    if (!found)
+                    {
+                        AnsiConsole.Render(new Markup("[bold red]\n No Client Found With That ID[/]"));
+                        
                     }
-                }
-                if (!found)
-                {
-                    Console.WriteLine("No Client Found With That ID");
-                }
+
                 Caboose();
             }
 
