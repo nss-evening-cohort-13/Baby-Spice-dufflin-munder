@@ -296,13 +296,17 @@ namespace Baby_Spice_ConsoleProject
 
             void CreateNewSalesperson()
             {
+
+                
+=======
                 Console.Clear();
                 AnsiConsole.Render(rule);
-                Console.WriteLine("Enter New Salesperson's First Name:");
+                AnsiConsole.Render(new Markup("[wheat1]\nEnter New Salesperson's First Name: [/]"));
+
                 string salesFirstName;
                 salesFirstName = Console.ReadLine();
 
-                Console.WriteLine("Enter New Salesperson's Last Name:");
+                AnsiConsole.Render(new Markup("[wheat1]Enter New Salesperson's Last Name: [/]"));
                 string salesLastName;
                 salesLastName = Console.ReadLine();
 
@@ -310,7 +314,7 @@ namespace Baby_Spice_ConsoleProject
 
                 salesPeople.Add(newSalesEmployee);
 
-                Console.WriteLine($"Hi, {salesFirstName}");
+                AnsiConsole.Render(new Markup($"[deepskyblue1]Hi, {salesFirstName}[/]"));
                 Caboose();
             }
 
